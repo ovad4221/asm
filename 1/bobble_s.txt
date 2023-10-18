@@ -1,0 +1,39 @@
+start:
+	movl $0, -4(%rbp) ;# i
+	jmp for_1
+
+
+infor_1:
+	movl $0, -8(%rbp) ;# j
+    jmp for_2
+
+infor_2:
+    movl -8(%rbp), %eax
+    leaq 0(, %eax, 4), %rbx ;# +j -> rbx
+    movl -4(%rbp), %ecx
+    leaq 0(, %ecx, 4), %rdx ;# +i -> rdx
+    leaq a(%rip), %rax
+
+    movl (%rbx, %rax), %ecx
+    cmpl (%rdx, %rax), %ecx
+    ja swap
+    jmp ch_pl_2
+swap: 
+    movl (%rbx, %rax), %ecx
+    movl (%rdx, %rax), %esi ;# normal registers have run out((
+    movl %esi, (%rbx, %rax)
+    movl %ecx, (%rdx, %rax)
+
+ch_pl_2:    addl $1, -8(%rbp)
+
+for_2:
+    movl n(%rip), %ecx;
+    cmpl %ecx, -8(%rbp)
+	jb infor_2
+
+    addl $1, -4(%rbp)
+
+for_1:
+    movl n(%rip), %ecx;
+	cmpl %ecx, -4(%rbp)
+	jb infor_1

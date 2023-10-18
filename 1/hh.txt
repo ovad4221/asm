@@ -1,0 +1,11 @@
+eax a -> hz -> 0
+ebx
+ecx c
+edx b
+esi g -> a
+
+rdi -> hz
+
+r8d g
+
+printf <- esi, edx, ecx, r8d... <- rdi - string
